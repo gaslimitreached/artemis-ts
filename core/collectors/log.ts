@@ -1,13 +1,6 @@
-import { Subject } from 'rxjs';
 import { AbiEvent } from 'abitype';
-import {
-  Address,
-  Chain,
-  createPublicClient,
-  Log,
-  PublicClient,
-  webSocket,
-} from 'viem';
+import { Subject } from 'rxjs';
+import { Address, Log, PublicClient } from 'viem';
 
 type EventScope = {
   address?: Address | Address[],
@@ -19,22 +12,16 @@ type EventScope = {
 class LogCollector {
   private client: PublicClient; 
   private filter: EventScope;
-  private subject: Subject<Log[]>;
+  private subject: Subject<any>;
 
   constructor(
-    url: string,
-    chain: Chain,
+    client: PublicClient,
     filter: EventScope,
     subject: Subject<Log[]>
   ) {
-    this.subject = subject;
+    this.client = client;
     this.filter = filter;
-
-    this.client = createPublicClient({
-      batch: { multicall: true },
-      chain: chain,
-      transport: webSocket(url),
-    });
+    this.subject = subject;
   }
 
   public start() {

@@ -1,3 +1,4 @@
 import { BundleExecutor } from './bundle';
+import { MempoolExecutor } from './mempool';
 
-export { BundleExecutor };
+export { BundleExecutor, MempoolExecutor };
